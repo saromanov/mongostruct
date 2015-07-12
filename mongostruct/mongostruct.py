@@ -18,3 +18,17 @@ class Base(dict):
                 )
         collection.insert_one(pairs)
 
+
+class DB(dict):
+    def __init__(self):
+        self.client = pymongo.MongoClient()
+
+    def _inner(self):
+        collnames = self.collections
+
+    def createCollection(self, name):
+        self.collections.append(name)
+
+    def getCollections(self):
+        return self.collections
+
