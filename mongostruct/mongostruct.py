@@ -16,7 +16,7 @@ class Base(dict):
                 list(filter(lambda x: not(x[0].startswith('__')) and x[0] != 'client',
                     inspect.getmembers(self, lambda x: not(inspect.isroutine(x)))))
                 )
-        collection.insert_one(pairs)
+        collection.insert(pairs)
 
 
 class DB(dict):
@@ -31,4 +31,14 @@ class DB(dict):
 
     def getCollections(self):
         return self.collections
+
+
+class Collection:
+    def __init__(self, items):
+        self.items = items
+        self.client = pymongo.MongoClient()
+
+    def insert(self, dbname):
+        coll = self.client[dbname][self.__class__.__name__]
+        coll.insert(self.items)
 
